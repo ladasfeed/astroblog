@@ -135,15 +135,7 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		"blog": Record<string, {
-  id: string;
-  slug: string;
-  body: string;
-  collection: "blog";
-  data: any;
-  render(): Render[".md"];
-}>;
-"blogq": {
+		"blogq": {
 "first-post.md": {
 	id: "first-post.md";
   slug: "first-post";
