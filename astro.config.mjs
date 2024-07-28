@@ -7,6 +7,7 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   site: "https://ladasfeed.github.io",
-  base: "astroblog",
+  // base: "astroblog",
   integrations: [mdx(), sitemap(), react()],
+  // output: "static",
 });
