@@ -3,20 +3,33 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import { Test } from "../components/TestReactComponent";
+import Test from "../components/TestReactComponent";
+import { db, Post } from "astro:db";
+
+const posts = await db.select().from(Post);
+
+let backgroundColor = "red";
+
+export const prerender = true;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style define:vars={{ backgroundColor }}>
+      h1 {
+        color: var(--backgroundColor);
+      }
+    </style>
   </head>
   <body>
     <Header />
     <Test client:load />
     <main>
-      <h1>🧑‍🚀 Hello, Astronaut!</h1>
+      <h1 onclick="handler">🧑‍🚀 Hello, Astronaut!</h1>
       <p>
+        {{ backgroundColor }}
         Welcome to the official <a href="https://astro.build/">Astro</a> blog starter
         template. This template serves as a lightweight, minimally-styled starting
         point for anyone looking to build a personal website, blog, or portfolio

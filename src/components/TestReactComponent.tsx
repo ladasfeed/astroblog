@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Test = () => {
+const Test = () => {
   const [state, setState] = useState(0);
 
   const increaseState = () => {
@@ -9,3 +9,5 @@ export const Test = () => {
 
   return <div onClick={increaseState}>{state}</div>;
 };
+
+export default Test;
