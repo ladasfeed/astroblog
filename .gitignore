@@ -3,3 +3,7 @@ node_modules
 
 dist
 .astro
+.env
+.firebaserc
+creds.json
+.firebase

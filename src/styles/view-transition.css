@@ -1,0 +1,17 @@
+@keyframes view-transtion-in {
+  0% {
+    transform: translateX(-100%) skewY(45deg);
+  }
+  100% {
+    transform: translateX(0) skewY(0deg);
+  }
+}
+
+@keyframes view-transtion-out {
+  0% {
+    transform: translateX(0) skewY(0deg);
+  }
+  100% {
+    transform: translateX(-100%) skewY(45deg);
+  }
+}

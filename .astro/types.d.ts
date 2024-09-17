@@ -135,48 +135,62 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		"blogq": {
-"3d-card-effect.mdx": {
-	id: "3d-card-effect.mdx";
-  slug: "3d-card-effect";
+		"posts": {
+"en/3d-card-effect.mdx": {
+	id: "en/3d-card-effect.mdx";
+  slug: "en/3d-card-effect";
   body: string;
-  collection: "blogq";
-  data: InferEntrySchema<"blogq">
+  collection: "posts";
+  data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"first-post.mdx": {
-	id: "first-post.mdx";
-  slug: "first-post";
+"en/css-transition.mdx": {
+	id: "en/css-transition.mdx";
+  slug: "en/css-transition";
   body: string;
-  collection: "blogq";
-  data: InferEntrySchema<"blogq">
+  collection: "posts";
+  data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"markdown-style-guide.md": {
-	id: "markdown-style-guide.md";
-  slug: "markdown-style-guide";
+"en/first-post.mdx": {
+	id: "en/first-post.mdx";
+  slug: "en/first-post";
   body: string;
-  collection: "blogq";
-  data: InferEntrySchema<"blogq">
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"en/markdown-style-guide.md": {
+	id: "en/markdown-style-guide.md";
+  slug: "en/markdown-style-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"second-post.md": {
-	id: "second-post.md";
-  slug: "second-post";
+"en/second-post.md": {
+	id: "en/second-post.md";
+  slug: "en/second-post";
   body: string;
-  collection: "blogq";
-  data: InferEntrySchema<"blogq">
+  collection: "posts";
+  data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"third-post.md": {
-	id: "third-post.md";
-  slug: "third-post";
+"en/third-post.md": {
+	id: "en/third-post.md";
+  slug: "en/third-post";
   body: string;
-  collection: "blogq";
-  data: InferEntrySchema<"blogq">
+  collection: "posts";
+  data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"using-mdx.mdx": {
-	id: "using-mdx.mdx";
-  slug: "using-mdx";
+"en/using-mdx.mdx": {
+	id: "en/using-mdx.mdx";
+  slug: "en/using-mdx";
   body: string;
-  collection: "blogq";
-  data: InferEntrySchema<"blogq">
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"ru/3d-card-effect.mdx": {
+	id: "ru/3d-card-effect.mdx";
+  slug: "ru/3d-card-effect";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
 };
 

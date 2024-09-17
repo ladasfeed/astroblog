@@ -1,0 +1,358 @@
+---
+title: "Css transition in depth"
+description: "Learn some important features of css transition."
+pubDate: "Jul 08 2022"
+heroImage: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+tags: ["css", "frontend"]
+category: "Frontend"
+---
+
+import Example1 from '../demo/css-transform/components/example1/index.jsx';
+import Example2 from '../demo/css-transform/components/example2/index.jsx';
+import Example3 from '../demo/css-transform/components/example3/index.jsx';
+import Example4 from '../demo/css-transform/components/example4/index.tsx';
+import Perspective1 from '../demo/css-transform/components/perspective_1/index.tsx';
+import SpectateCursor1 from '../demo/css-transform/components/spectate-cursor/index.tsx';
+import SpectateCursor2 from '../demo/css-transform/components/spectate-cursor-demo-1/index.tsx';
+import TranslateRotated1 from '../demo/css-transform/components/translate-rotated-1/index.tsx';
+import SkewExample from '../demo/css-transform/components/skew-example/index.tsx';
+
+import '../demo/css-transform/components/styles.css';
+
+# CSS transfrom in depth.
+
+At first glance CSS transform property is pretty easy since it works in a very declarative
+way. If you tell the browser to rotate an element around Z axis by `45deg`, or scale an element `2` times, or move it along Y axis by `100px` - it will do it easily!
+
+<Example1 client:only />
+
+Anyway, the more you work with complex CSS animations the more you understand that there are actually some interesting things about CSS transform logic under the hood.
+
+In the article i always try to avoid typical matematician explanation since i find them unnecessary difficult.
+
+---
+
+## How transform functions work
+
+When you apply a transform property to an element the browser creates 3 dimensional space with 3 axes.
+See the following picture to understand the model and default axises directions.
+
+( Z AXIS LOOKS AT YOU, Y AXIS LOOKS DOWN )
+An image with transform translate 0 and axis;
+
+There are some transform functions available:
+
+1. `translateX`, `translateZ`, `translateY`, `translate3d` - move an element along an axis
+2. `rotate`, `rotate3d`, `rotateX`, `rotateY`, `rotateZ` - rotate an element along an axis
+3. `skew`, `skewX`, `skewY` - distort the element by specific axis
+4. `scale`, `scaleX`, `scaleY` - scale by specific axis
+
+> Every transform function is applied to transform-axes, _not the element_. Axes are placed relatevely the element accordingly to `transform-origin` value.
+
+In other words, CSS transform functions based on transform matrix R4. Every function represents a specific matrix that will be multipled by another function-matrix in order, from left to right. But i want you to use my explanation since it is more clear than matrices IMHO.
+
+I know that this concept may be a little bit tricky, but the next example is supposed to clarify everything.
+
+The task: rotate the element by `45deg` with the pivot point at the center and move it along X axis by `25px`;
+
+<Example4 client:only />
+
+As you can see the element is not moving by actual X axis - the translate path is rotated with the element!
+
+---
+
+Another example.
+
+> The task: move the cube by `25px` and scale it `2` times.
+
+```css
+.box {
+  transform-origin: center;
+  transform: translateX(25px) scale(2);
+}
+```
+
+<Example2 mode="translate-scale" client:only />
+
+But what if we change the order of transfrom functions?
+Stop and think a little about it.
+Look at the code below - everthing should work as an example above - scale the cube 2 times and translate it by `25px`.
+
+```css
+.box {
+  transform-origin: center;
+  transform: scale(2) translateX(25px);
+}
+```
+
+<Example2 mode="scale-translate" client:only />
+
+Astonishing result: the cube is moved by `50px`! Why is that?
+Because we do not scale the object, we scale axes!
+Before scaling axes pixel was exactly like viewport pixel, but after scaling it became 2 times bigger.
+
+---
+
+Again: we do not work with the element, we work with it's transform-axes.
+
+## Transform related properties
+
+### Transform origin
+
+We are able to define where our axes are gonna be placed relatevely to an element using `transform-origin` value.
+
+To see how it affects the result of tranforms lets use rotateZ function with different transform-origin value;
+
+<Example3 client:only />
+
+---
+
+### Perspective
+
+This is a very powerful feature that allows you to move your model to fell 3d space. That property defines how far the user is located from your model.
+
+```css
+.container {
+  perspective: 300px;
+}
+.box {
+  transform: rotateY(50deg);
+}
+```
+
+<Perspective1 client:only />
+
+### Transform style
+
+| Value       | Description                                       |
+| ----------- | ------------------------------------------------- |
+| flat        | default value;                                    |
+| preserve-3d | creates 3 dimensional axes for direct child nodes |
+
+### Perspective origin
+
+The property defines point of view on our container with perspective property defined. MDN has amazing <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/perspective-origin" target="_blank">demo</a> where you can fully understand the property. Anyway i don't find the property really useful since i have never used it.
+
+## Transform functions
+
+I am not gonna make a review of all transform function since the Interned is full of such information. Let's pay some attention to bad-known functions.
+
+### Skew
+
+This is quite hard to understand this function without knowlendge from above, but we are ready.
+If you do skewY(45deg), it rotates x axis by 45deg. Simple as that! Points coordinates were not changed, we just changed the base axes.
+
+See the example to understand what is happening to axes when we apply skew function.
+
+<SkewExample client:only />
+
+### Matrix3d
+
+I think you have never heard, never used and will never use the function since it is constructed for mathematitian goys.
+
+```css
+.box {
+  transform: matrix3d(
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+  )
+}
+```
+
+This is something called 4x4 transformation matrix ( or homogeneous matrix ). But there is one cool thing about it - you are able to apply many transform functions in a really short way.
+[Here](https://code-industry.ru/masterpdfeditor-help/transformation-matrix/) you can find a really cool explanation of what is homogeneous matrix
+But i suggest you just to play with some inputs on [this amazing website](https://ramlmn.github.io/visualizing-matrix3d/) with live demo.
+
+### Rotate3d
+
+I know, this is not a property, but this is a functuion that requires special attention.
+It allows you to define a vector around which the element will rotate. The vector starts from the transfrom-origin.
+
+```css
+.box {
+  /* transform: rotate(x, y, z, angle); */
+  transform: rotate3d(1, 1, 0, 45deg);
+}
+```
+
+The feature can be actually useful for some cases.
+For example - interactive plane that looks at the user's cursor.
+
+<SpectateCursor1 client:only />
+
+```js
+const pythagorean = (x, y) => Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+
+container.addEventListener('mousemove', (e: MouseEvent) => {
+  const {
+    width,
+    height,
+    x: xOffset,
+    top: yOffset,
+  } = container.getBoundingClientRect();
+
+  const x = e.clientX - xOffset - width / 2;
+  const y = e.clientY - yOffset - height / 2;
+
+  const angle = (pythagorean(x, y) / pythagorean(height / 2, width / 2)) * 60;
+
+  box.style.transform = `rotate3d(${-y}, ${x}, 0, ${angle}deg)`;
+  shadow.style.transform = `rotate3d(${Math.abs(y)}, ${x}, 0, ${angle}deg)`;
+});
+```
+
+If your really liked the demo you can read the explanation. But be aware, explanation is 2 times harnder than the whole article :)
+
+<details>
+<summary>Explanation</summary>
+
+##### Normalize coordinate system
+
+First of all, i wanna get normal coordinate system, specifically i wanna move the origin of coordinate system to the center of my container. Expected result - when i move my cursor to the center, the point is (0,0), left top corner of the box is ( - width / 2, - height / 2) point.
+
+<SpectateCursor2 client:only />
+
+##### Find rotation vector
+
+That is good. Now i wanna get the rotation vector. The point that we got on the previous step is not the needed rotation vector. Rotation vector has to be a perpendicular to the user's cursor vector.
+
+[IMAGE]
+
+I have found the vector using a math trick ( no math PHD is needed ). This formula is necessary and sufficient condition for 2 vectors to be perpendicular:
+
+```
+Ax * Bx + Ay * By = 0;
+```
+
+This is an amazing equation since we can simply consider A coords as B coords, with small changes. Bx = -Ay, By = Ax.
+
+```
+Ax * -Ay + Ax * Ay = 0;
+Ax * Ay = Ax * Ay;
+```
+
+<details>
+<summary>Another trick to find a perpendicular vector using the system</summary>
+
+```
+sqrt(x^2+y^2)=sqrt(12500)
+sqrt((-50 - x)^2 + (-100 - y)^2)=sqrt(12500 + 12500)
+
+// where -50 = currentX, -100 = currentY
+// sqrt(12500) = sqrt(-50*-50 + -100*-100)
+```
+
+The system comes from the fact that the length of needed vector equals length of current vector and the distance between these two points can be calulated vie Pyphagor theorem.
+
+</details>
+
+So our rotation vector is `(-y, x)`. We could use `(y, -x)` but there are some limitations. Such vector will lead to rotation the element to the opposide side, direction of vector defines which direction element is gonna rotate around.
+
+```js
+box.style.transform = `rotate3d(${-y}, ${x}, 0, 60deg)`;
+```
+
+In the line above i made the rotation angle fixed for simplifying understanding process.
+Now we are ready to make it alive.
+
+##### Making rotation alive
+
+This angle as you can see depends on how far users cursor is located from the element ( from the center of container ). How to calculate the length from one point to another point in the decarts coordinate system? Pythagoras theorem, junior school.
+
+```
+Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+```
+
+Now my idea is somehow use the value for rotation, but now the number can be pretty large because container can be big. E.g. 300deg is not good for us.
+I want the rotation to be in the next range: `[0, 60]`. So i need to limit the result of my calculations with the 60 value. I need to make a projection.
+
+`x` - current value, `MaxX` - maximum x value, `ProjectionBase`- the value we wanna limit the current value with.
+
+```
+Projection = x / MaxX * ProjectionBase
+```
+
+`x / MaxX` returns a value from 0 to 1, and then just multiply it by ProjectionBase. So if `x = MaxX` then `Projection` will be `ProjectionBase`. That is what we need.
+
+```js
+function pythagorean(sideA, sideB) {
+  return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
+}
+
+const angle = (pythagorean(x, y) / pythagorean(height / 2, width / 2)) * 60;
+shadow.style.transform = `rotate3d(${Math.abs(y)}, ${x}, 0, ${angle}deg)`;
+```
+
+</details>
+
+## Small tips
+
+### Translate rotated element by real axis
+
+> The task: move rotated element by by horizontal axis.
+
+As you remember, if we try to do something like that:
+
+```css
+.box {
+  transform: rotate(60deg) translateX(50px);
+}
+```
+
+then our element is gonna be translated by rotated x axis. That does not fit the purpose.
+
+We have to use some simple trigonometry. It is incredebly useful to know how to use trigonometry circle, because css and js provides you several helpful functions like `sin` and `cos`.
+So, lets rotate the element. Its axes are rotated as well, but we have to translate the element around previous axes. Fortunately, we know how our axes were changed - they were just rotaed by 60 degrees! What does that mean?
+
+> It means that every point in the current coordinate system was rotated as well. Here is the formula.
+
+```js
+const newX = Math.cos(ROTATION_ANGLE) * prevX;
+const newY = Math.sin(ROTATION_ANGE) * prevY;
+```
+
+So before rotation we had a point (100, 0). That would be our translation before rotation to reach needed effect.
+Let's rotate the point using our formula.
+
+```js
+const x = Math.ceil(Math.cos(ROTATION_RAD) * TRANSLATION);
+const y = Math.ceil(-Math.sin(ROTATION_RAD) * TRANSLATION);
+```
+
+Keep in mind that i turned sin value into negative one because CSS Y coordinate is opposite to common Descartes one.
+
+See the result!
+
+<TranslateRotated1 client:only />
+
+### Implicit positioned ancestor
+
+If you apply any transfrom function to an element, the element becomes a positioned ancestor, so any nested element with position absolute is gonna be positioned relatevely our transformed element!
+
+### Svg transform
+
+Every svg non-meta element like rect or path can be animatied. Never forget about it!
+
+### Safari issues
+
+If you face any flickering issues with animated elements in Safari browser just try to use the next properties on the flickering element / container.
+
+```css
+.safari-flickering-element {
+  -webkit-transform-style: preserve-3d;
+  /* OR */
+  -webkit-backface-visibility: hidden;
+  /* OR */
+  -webkit-transform: translate3d(0, 0, 0);
+}
+```
+
+[Reference](https://stackoverflow.com/questions/15751012/css-transform-causes-flicker-in-safari-but-only-when-the-browser-is-2000px-w)
+
+## Conclusion
+
+I hope that you learned something useful from the article. If not - you are already very powerful developer! Unfortunately, a very small percentage of developers know HOW something actually works.
+
+God bless you

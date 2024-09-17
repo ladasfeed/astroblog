@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.box {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: theme(colors.accent);
+  border-radius: 10px;
+  transform-origin: bottom left;
+  transition: 0.3s;
+}
+
+.action {
+  background: #b8336a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 5px 1px rgb(0, 0, 0, 0.4);
+}
+
+.dark .action {
+  box-shadow: 0 2px 5px 1px rgba(255, 255, 255, 0.4);
+}
+
+.demo-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto;
+  margin-bottom: 24px;
+}
+
+.container-inner {
+  background: #ffffff;
+  width: 100%;
+  overflow: hidden;
+  height: 250px;
+  border-radius: 12px;
+  border: 5px solid theme(colors.dark);
+  position: relative;
+}
+
+.axis {
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #aaaaaa;
+  left: 0;
+  transform-origin: center;
+  display: flex;
+  z-index: 2;
+}
+.metricUnit {
+  display: block;
+  height: 10px;
+  width: 2px;
+  flex-shrink: 0;
+  background: #d4d4d4;
+  position: relative;
+  top: -4px;
+}
+
+.cube {
+  position: absolute;
+  top: 80px;
+  left: 50px;
+  width: 100px;
+  height: 100px;
+  background: theme(colors.accent);
+  border-radius: 10px;
+  transform-origin: bottom left;
+  transition: 0.3s;
+}
+
+/* Check */
+.check-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.check-input-group__title {
+  text-align: center;
+}
+.check-input-group__list {
+  display: flex;
+  gap: 16px;
+}
+.check-input {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.dark .container-inner {
+  background: #131313;
+  border: 5px solid #bababa;
+}

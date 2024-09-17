@@ -1,0 +1,44 @@
+---
+import i18n, { changeLanguage } from "i18next";
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "@layouts/BlogPost.astro";
+
+changeLanguage("ru");
+
+export const prerender = true;
+export async function getStaticPaths() {
+    const blogEntries = await getCollection("posts");
+    const paths = blogEntries
+        .filter(({ id }) => {
+        return id.startsWith(i18n.language);
+    })
+        .map((post) => {
+        const slug = post.slug.replace(`${i18n.language}/`, "");
+        return { params: { slug: slug || undefined }, props: post };
+    });
+    console.log(i18n.language, "SHOULD BE RU");
+    return paths;
+}
+type Props = CollectionEntry<"posts">;
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<BlogPost {...post.data}>
+  <Content />
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="ladasfeed/astroblog"
+    data-repo-id="R_kgDOMas6mA"
+    data-category="General"
+    data-category-id="DIC_kwDOMas6mM4ChR9p"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    crossorigin="anonymous"
+    async></script>
+</BlogPost>

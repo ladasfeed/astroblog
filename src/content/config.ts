@@ -1,6 +1,7 @@
+import { CATEGORIES } from "@consts";
 import { defineCollection, z } from "astro:content";
 
-const blog = defineCollection({
+const posts = defineCollection({
   type: "content",
   // Type-check frontmatter using a schema
   schema: z.object({
@@ -10,7 +11,9 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    category: z.enum(CATEGORIES as [string, ...string[]]), // WTF
   }),
 });
 
-export const collections = { blogq: blog };
+export const collections = { posts };

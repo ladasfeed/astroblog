@@ -1,0 +1,10 @@
+.cube__transform-origin-mark {
+  width: 10px;
+  position: absolute;
+  z-index: 5;
+  height: 10px;
+  background-color: #ee008b;
+  border-radius: 50%;
+  transition: 0.3s;
+  transform: translateX(-50%) translateY(-50%);
+}

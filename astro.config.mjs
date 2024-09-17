@@ -1,17 +1,21 @@
 import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
-import db from "@astrojs/db";
+import astroI18next from "astro-i18next";
+import mdx from "@astrojs/mdx";
+import node from "@astrojs/node";
 
-import vercel from "@astrojs/vercel/serverless";
-
-// https://astro.build/config
 export default defineConfig({
-  site: "https://ladasfeed.github.io",
-  integrations: [mdx(), sitemap(), react(), tailwind(), db()],
-  output: "hybrid",
-  //  adapter: vercel(),
-  adapter: vercel(),
+  site: "https://7ate9-blog.site",
+  integrations: [react(), sitemap(), tailwind(), astroI18next(), mdx()],
+  output: "server",
+  adapter: node({
+    mode: "standalone",
+  }),
+  paths: {
+    "@components/*": ["src/components/*"],
+    "@assets/*": ["src/assets/*"],
+    "@posts-assets/*": ["src/content/posts/assets/*"],
+  },
 });

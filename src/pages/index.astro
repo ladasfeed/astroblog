@@ -1,79 +1,239 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import Test from "../components/TestReactComponent";
-import { db, Post } from "astro:db";
+import { PostCard } from "@components/react/PostCard/PostCard";
+import { CATEGORIES } from "@consts";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { normalizePosts } from "@lib/postsHelpers";
+import { getCollection } from "astro:content";
+import i18next, { t, changeLanguage } from "i18next";
 
-const posts = await db.select().from(Post);
+changeLanguage("en");
 
-let backgroundColor = "red";
-
+const postsRaw = normalizePosts(await getCollection("posts"));
+const postsForFirstSection = postsRaw.slice(0, 3);
+const postsForPostsListSection = postsRaw.slice(3, 9);
 export const prerender = true;
 ---
 
 <!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style define:vars={{ backgroundColor }}>
-      h1 {
-        color: var(--backgroundColor);
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <Test client:load />
-    <main>
-      <h1 onclick="handler">🧑‍🚀 Hello, Astronaut!</h1>
-      <p>
-        {{ backgroundColor }}
-        Welcome to the official <a href="https://astro.build/">Astro</a> blog starter
-        template. This template serves as a lightweight, minimally-styled starting
-        point for anyone looking to build a personal website, blog, or portfolio
-        with Astro.
-      </p>
-      <p>
-        This template comes with a few integrations already configured in your
-        <code>astro.config.mjs</code> file. You can customize your setup with
-        <a href="https://astro.build/integrations">Astro Integrations</a> to add
-        tools like Tailwind, React, or Vue to your project.
-      </p>
-      <p>Here are a few ideas on how to get started with the template:</p>
-      <ul>
-        <li>Edit this page in <code>src/pages/index.astro</code></li>
-        <li>
-          Edit the site header items in <code>src/components/Header.astro</code>
-        </li>
-        <li>
-          Add your name to the footer in <code>src/components/Footer.astro</code
-          >
-        </li>
-        <li>
-          Check out the included blog posts in <code>src/content/blog/</code>
-        </li>
-        <li>
-          Customize the blog post page layout in <code
-            >src/layouts/BlogPost.astro</code
-          >
-        </li>
-      </ul>
-      <p>
-        Have fun! If you get stuck, remember to <a
-          href="https://docs.astro.build/"
-          >read the docs
-        </a> or <a href="https://astro.build/chat">join us on Discord</a> to ask
-        questions.
-      </p>
-      <p>
-        Looking for a blog template with a bit more personality? Check out <a
-          href="https://github.com/Charca/astro-blog-template"
-          >astro-blog-template
-        </a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-      </p>
-    </main>
-    <Footer />
-  </body>
-</html>
+<BaseLayout pageTitle="blog" pageDescription="Awsome blog">
+  <main class="page">
+    <section
+      class="flex justify-between gap-[120px] section-container pt-[60px] pb-[64px]"
+    >
+      <div class="left">
+        <div
+          class="subtitle text-[92px] font-black font-secondary flex flex-col items-start"
+        >
+          <span class="text-accent z-[1] relative">BE BASED</span>
+          <span class="text-black relative z-0 top-[-30px]">NOT BASIC</span>
+        </div>
+        <div class="animation-wrapper">
+          <div class="cube">
+            <a class="cube__side">CSS</a>
+            <a class="cube__side">TS</a>
+            <a class="cube__side">REACT</a>
+            <a class="cube__side">FEATURES</a>
+            <div class="cube__side"></div>
+            <div class="cube__side"></div>
+          </div>
+
+          <!-- <div>
+            <svg
+              class="text-gray"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              width="32"
+              height="32"
+              astro-icon="social/github"
+              ><path
+                fill="currentColor"
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              ></path></svg
+            >
+          </div> -->
+        </div>
+      </div>
+      <div class="right">
+        {postsForFirstSection.map((post) => <PostCard {...post} />)}
+      </div>
+    </section>
+
+    <section class="section-container categories">
+      <h2 class="text-end">{t("categories")}</h2>
+      <div class="categories__list">
+        {
+          CATEGORIES.map((item) => {
+            return <a class="categories__list-item">{item}</a>;
+          })
+        }
+      </div>
+    </section>
+
+    <section class="section-container recommend">
+      <h2 class="text-start">I WOULD RECOMMEND</h2>
+      <div class="recommend-list">
+        {
+          postsForPostsListSection.map((item) => {
+            return <PostCard view="large" {...item} />;
+          })
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .left {
+    flex-shrink: 0;
+  }
+  .animation-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .cube {
+    --size: 200px;
+
+    width: var(--size);
+    height: var(--size);
+    perspective: 500px;
+    transform-style: preserve-3d;
+    animation: intro 5s forwards infinite;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+
+  .cube__side {
+    box-shadow: 0 0 10px 5px inset;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center calc(-1 * (var(--size) / 2));
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--color-accent);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s background;
+    backface-visibility: hidden;
+    font-size: 32px;
+  }
+  .cube__side:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .cube__side:nth-child(2n) {
+    /* backdrop-filter: blur(2px); */
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* section 2 */
+
+  /* global */
+  h2 {
+    font-size: 64px;
+    color: var(--color-accent);
+    font-weight: 900;
+    font-family: var(--font-secondary);
+  }
+
+  .categories {
+    padding-bottom: 60px;
+  }
+
+  .categories__list {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .categories__list-item {
+    padding: 8px 16px;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 0 4px 4px rgba(0 0 0 / 0.25);
+    letter-spacing: 2px;
+    /* font-family: theme(fontFamily.secondary); */
+    background-color: white;
+    color: theme(colors.dark);
+  }
+
+  /* Section 3 */
+  .recommend-list {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Dark mode */
+  :global(.dark) .cube__side {
+    background: theme(colors.dark_darker);
+  }
+  :global(.dark) .cube__side:hover {
+    background: var(--color-white);
+  }
+
+  :global(.dark) .categories__list-item {
+    background-color: theme(colors.blue-dark);
+    color: theme(colors.white);
+    box-shadow: 0 0 4px 4px rgba(255 255 255 / 0.25);
+  }
+</style>
+
+<script is:inline>
+  {
+    let sides = document.querySelectorAll(".cube__side");
+    let container = document.querySelector(".cube");
+
+    let speed = 0.5;
+    let delta = { x: 0, y: 0 };
+
+    const updateRotation = ({ x, y }) => {
+      sides.forEach((item, index) => {
+        if (index < 4) {
+          item.style.transform = `rotateX(${x}deg) rotateY(${index * 90 + y}deg) `;
+        } else if (index == 4) {
+          item.style.transform = `rotateX(${90 + x}deg) rotateZ(${-y}deg) `;
+        } else if (index == 5) {
+          item.style.transform = `rotateX(${270 + x}deg) rotateZ(${y}deg)  `;
+        }
+      });
+    };
+
+    container.addEventListener("mouseover", () => {
+      speed = 0.3;
+    });
+    container.addEventListener("mouseout", () => {
+      speed = 0.5;
+    });
+
+    const rotate = ({ x, y }) => {
+      if (x) delta.x += x;
+      if (y) delta.y += y;
+      updateRotation(delta);
+    };
+
+    rotate({ x: -15 });
+    intervalId = window.setInterval(() => {
+      window.requestAnimationFrame(() => {
+        rotate({ y: speed });
+      });
+    }, 16);
+
+    updateRotation(delta);
+  }
+</script>

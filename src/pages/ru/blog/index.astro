@@ -1,0 +1,11 @@
+---
+import { changeLanguage } from "i18next";
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+changeLanguage("ru");
+
+export const prerender = true;
+---
+
+<BaseLayout />

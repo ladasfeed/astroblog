@@ -1,0 +1,7 @@
+.axes--rotated :global(.axis):nth-child(1) {
+  transform: rotateZ(-45deg) !important;
+}
+
+.axes :global(.axis):nth-child(1) {
+  transition: .3s;
+}
