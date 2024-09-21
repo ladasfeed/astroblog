@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import { getRouter } from "src/routes";
-import styles from "./PostCard.module.css";
+import styles from "./PostCard.module.scss";
 import i18next from "i18next";
 
 type PropsType = CollectionEntry<"posts"> & {
@@ -18,7 +18,7 @@ export const PostCard: React.FC<PropsType> = ({ view, ...postData }) => {
       <div className={styles.body}>
         <div className={styles.content}>
           <h5 className={styles.title}>{postData.data.title}</h5>
-          <p className={styles.descirption}>{postData.data.description}</p>
+          <p className={styles.description}>{postData.data.description}</p>
           <div className={styles.details}>
             <ul className={styles.tags}>
               {postData.data.tags?.map((item) => (

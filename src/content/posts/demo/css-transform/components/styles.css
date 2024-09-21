@@ -85,14 +85,18 @@
 /* Check */
 .check-input-group {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
 }
 .check-input-group__title {
   text-align: center;
+  font-weight: bold;
+  font-size: 16px;
 }
 .check-input-group__list {
   display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 .check-input {

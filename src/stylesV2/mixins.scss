@@ -1,0 +1,27 @@
+@import './variables.scss';
+
+@mixin bpDesktopL {
+  @media screen and (min-width: $bp-desk-l) {
+    @content;
+  }
+}
+
+@mixin bpDesktopM {
+  @media screen and (max-width: $bp-desk-l) {
+    @content;
+  }
+}
+
+@mixin bpDesktopSM {
+  @media screen and (max-width: $bp-desk-m) {
+    @content;
+  }
+}
+
+@mixin bpMobile {
+  @media screen and (max-width: $bp-mobile) {
+    @content;
+  }
+}
+
+

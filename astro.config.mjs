@@ -18,4 +18,14 @@ export default defineConfig({
     "@assets/*": ["src/assets/*"],
     "@posts-assets/*": ["src/content/posts/assets/*"],
   },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // path to your scss variables
+          additionalData: `@import "./src/stylesV2/mixins.scss";@import "./src/stylesV2/variables.scss";`,
+        },
+      },
+    },
+  },
 });

@@ -13,7 +13,6 @@ const defaultLocale = i18n.AstroI18next.config.defaultLocale;
 const icons = Object.entries(LANGUAGE_TO_ICON_MAP);
 const icon = LANGUAGE_TO_ICON_MAP[i18next.language];
 
-console.log(i18next.language);
 ---
 
 <div class="container">
@@ -22,7 +21,7 @@ console.log(i18next.language);
       data-open-switch-lang
       class="lang-icon"
       id="languageSwitcher"
-      width="36"
+      width="28"
       src={icon}
       alt="language switcher"
     />
@@ -37,7 +36,7 @@ console.log(i18next.language);
           class="lang-icon"
           data-switch-lang={langKey}
           id="languageSwitcher"
-          width="36"
+          width="28"
           src={icon}
           alt="language switcher"
         />
@@ -56,20 +55,21 @@ console.log(i18next.language);
   }
 
   .dropdown {
-    display: flex;
     position: absolute;
-    left: -8px;
     top: calc(100% + 8px);
-    opacity: 0;
-    width: calc(100% + 16px);
+    left: -8px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    pointer-events: none;
-    transition: 0.4s;
-    transform: rotateY(90deg);
     gap: 8px;
+    width: calc(100% + 16px);
+    transform: rotateY(90deg);
+    transition: 0.4s;
+    opacity: 0;
+    pointer-events: none;
   }
+
   .dropdown.open {
     opacity: 1;
     transform: rotateY(0deg);
@@ -89,8 +89,6 @@ console.log(i18next.language);
 
     const currentUrlWithoutLang = `${document.location.pathname.replace(`/${lang}`, "")}${document.location.search}`;
 
-    console.log(currentUrlWithoutLang, "currentUrlWithoutLang");
-    console.log(languageDropdown, "languageDropdown");
     switcherNode.forEach((el) =>
       el.addEventListener("click", (e) => {
         const langToSwitch = e.target.dataset.switchLang;

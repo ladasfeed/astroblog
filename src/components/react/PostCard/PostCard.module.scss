@@ -1,0 +1,168 @@
+@import './src/stylesV2/variables.scss';
+
+.container {
+  position: relative;
+  height: auto;
+  overflow: hidden;
+  box-shadow: 0 4px 5px 2px rgb(0 0 0 / 20%);
+  border-radius: 16px;
+  background-color: white;
+  transition: 0.3s;
+
+  &::before {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+
+    /* transform: translateY(100%); */
+    background: radial-gradient(
+      circle,
+      rgb(184 51 106 / 100%) 0%,
+      rgb(184 51 106 / 82.7%) 20%,
+      rgb(204 36 76 / 56.9%) 48%,
+      rgb(255 0 0 / 0%) 100%
+    );
+    transition: 0.3s;
+    content: "";
+    opacity: 0;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 5px 2px rgba(var(--color-accent-rgb), 0.2);
+  }
+
+  &:hover::before {
+    opacity: 0.2;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+}
+
+
+.body {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+}
+
+.image {
+  display: block;
+  flex-shrink: 0;
+  width: 120px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 16px;
+  height: 100%;
+}
+
+.title {
+  margin-bottom: 12px;
+  color: inherit;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.description {
+  height: 2em;
+  font-size: 20px;
+}
+
+.details {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 18px;
+}
+
+/* Dark mode */
+:global(.dark) .container {
+  box-shadow: 0 4px 5px 2px rgb(255 255 255 / 20%);
+  background: theme('colors.dark_darker');
+}
+
+/* Mobile */
+@mixin mobileLayout {
+  .title {
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .image {
+    display: none;
+  }
+
+  .container {
+    border-radius: 8px;
+  }
+
+  .content {
+    padding: 16px;
+  }
+}
+
+/* Large */
+.container-large {
+  padding: 0;
+  height: 262px;
+  overflow: hidden;
+  border-radius: 24px;
+
+  .body {
+    flex-direction: row-reverse;
+  }
+
+  .content {
+    padding: 28px;
+  }
+
+  .image {
+    z-index: 1;
+    width: 350px;
+  }
+
+  .title {
+    margin-bottom: 28px;
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 24px;
+  }
+
+  @include bpMobile {
+    @include mobileLayout;
+
+    height: auto;
+  }
+}
+
+
+
+/* Mobile */
+@include bpMobile {
+ @include mobileLayout;
+}

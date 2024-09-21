@@ -18,14 +18,12 @@ export const prerender = true;
 <BaseLayout pageTitle="blog" pageDescription="Awsome blog">
   <main class="page">
     <section
-      class="flex justify-between gap-[120px] section-container pt-[60px] pb-[64px]"
+      class="section-1-container section-container"
     >
       <div class="left">
-        <div
-          class="subtitle text-[92px] font-black font-secondary flex flex-col items-start"
-        >
+        <div class="quote">
           <span class="text-accent z-[1] relative">BE BASED</span>
-          <span class="text-black relative z-0 top-[-30px]">NOT BASIC</span>
+          <span class="text-black relative z-0 top-[-0.4em]">NOT BASIC</span>
         </div>
         <div class="animation-wrapper">
           <div class="cube">
@@ -82,53 +80,112 @@ export const prerender = true;
   </main>
 </BaseLayout>
 
-<style>
+<style lang="scss">
+  @import '../stylesV2/mixins.scss';
+
   .page {
     display: flex;
     flex-direction: column;
     gap: 60px;
+
+    @include bpMobile {
+      gap: 24px;
+    }
+  }
+
+  .section-1-container {
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+
+    @include bpDesktopSM {
+      gap: 60px;
+    }
+
+    @include bpMobile {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+  .quote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-weight: 900;
+    font-size: 92px;
+    font-family: theme('fontFamily.secondary');
+
+    @include bpDesktopSM {
+      font-size: 76px;
+    }
+
+    @include bpMobile {
+      align-items: center;
+      font-size: 48px;
+    }
   }
 
   .left {
     flex-shrink: 0;
   }
+
   .animation-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 24px;
+
+    @include bpDesktopSM {
+      transform: scale(0.8)
+    }
+
+    @include bpMobile {
+      margin-top: calc(-20% + 24px);
+      margin-bottom: calc(-20% + 24px);
+      transform: scale(0.6);
+    }
   }
+
   .cube {
     --size: 200px;
 
-    width: var(--size);
-    height: var(--size);
-    perspective: 500px;
-    transform-style: preserve-3d;
-    animation: intro 5s forwards infinite;
     margin-right: 50px;
     margin-left: 50px;
+    width: var(--size);
+    height: var(--size);
+    transform-style: preserve-3d;
+    animation: intro 5s forwards infinite;
+    perspective: 500px;
   }
 
   .cube__side {
-    box-shadow: 0 0 10px 5px inset;
     position: absolute;
+    display: grid;
     width: 100%;
     height: 100%;
-    transform-origin: center center calc(-1 * (var(--size) / 2));
-    display: grid;
-    place-items: center;
-    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px 5px inset;
+    background: rgb(255 255 255 / 40%);
+    backface-visibility: hidden;
     color: var(--color-accent);
     font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s background;
-    backface-visibility: hidden;
     font-size: 32px;
+    transform-origin: center center calc(-1 * (var(--size) / 2));
+    transition: 0.3s background;
+    place-items: center;
+    cursor: pointer;
   }
+
   .cube__side:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgb(0 0 0 / 80%);
   }
+
   .cube__side:nth-child(2n) {
     /* backdrop-filter: blur(2px); */
   }
@@ -137,16 +194,24 @@ export const prerender = true;
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    @include bpMobile {
+      width: 100%;
+    }
   }
 
   /* section 2 */
 
   /* global */
   h2 {
-    font-size: 64px;
     color: var(--color-accent);
     font-weight: 900;
+    font-size: 64px;
     font-family: var(--font-secondary);
+
+    @include bpMobile {
+      font-size: 32px;
+    }
   }
 
   .categories {
@@ -155,42 +220,53 @@ export const prerender = true;
 
   .categories__list {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     margin-top: 24px;
   }
 
   .categories__list-item {
     padding: 8px 16px;
-    text-transform: uppercase;
-    font-size: 24px;
-    font-weight: bold;
-    box-shadow: 0 0 4px 4px rgba(0 0 0 / 0.25);
-    letter-spacing: 2px;
+    box-shadow: 0 0 4px 4px rgba(0 0 0 / 25%);
+
     /* font-family: theme(fontFamily.secondary); */
     background-color: white;
-    color: theme(colors.dark);
+    // color: thasdasasdasasdeme(colors.dark);
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 2px;
+
+    @include bpMobile {
+      font-size: 16px;
+    }
   }
 
   /* Section 3 */
   .recommend-list {
-    margin-top: 24px;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    margin-top: 24px;
+
+    @include bpMobile {
+      gap: 12px;
+    }
   }
 
   /* Dark mode */
   :global(.dark) .cube__side {
-    background: theme(colors.dark_darker);
+    background: theme('colors.dark');
   }
+
   :global(.dark) .cube__side:hover {
     background: var(--color-white);
   }
 
   :global(.dark) .categories__list-item {
-    background-color: theme(colors.blue-dark);
-    color: theme(colors.white);
-    box-shadow: 0 0 4px 4px rgba(255 255 255 / 0.25);
+    box-shadow: 0 0 4px 4px rgba(255 255 255 / 25%);
+    background-color: theme('colors.blue-dark');
+    color: theme('colors.white');
   }
 </style>
 

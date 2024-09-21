@@ -3,6 +3,23 @@ export default {
   darkMode: "selector",
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    screens: {
+      sm: {
+        max: "1024px",
+      },
+
+      md: {
+        max: "1440px",
+      },
+
+      lg: {
+        max: "1920px",
+      },
+
+      xl: {
+        min: "1920px",
+      },
+    },
     colors: {
       transparent: "transparent",
       current: "currentColor",

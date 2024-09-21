@@ -16,7 +16,7 @@ const router = getRouter(i18n.language);
 <header
   class="section-container bg-white dark:bg-dark flex justify-between shadow-md"
 >
-  <span class="text-accent text-[36px] font-secondary font-black">
+  <span class="text-accent text-[36px] sm:text-[24px] font-secondary font-black">
     <HeaderLink href={router.home}>{SITE_TITLE}</HeaderLink>
   </span>
 
@@ -25,51 +25,32 @@ const router = getRouter(i18n.language);
       {TAGS.map((tag) => <span class="font-semibold underline">#{tag}</span>)}
     </div>
     <div class="system-settings flex gap-[16px] items-center">
-      <svg
-        class="search-icon w-[36px] shrink-0 text-dark dark:text-white"
-        width="37"
-        height="36"
-        viewBox="0 0 37 36"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g clip-path="url(#clip0_1302_7)">
-          <path
-            d="M23.5323 21H22.3501L21.9311 20.595C23.3976 18.885 24.2806 16.665 24.2806 14.25C24.2806 8.865 19.9258 4.5 14.5534 4.5C9.18097 4.5 4.82617 8.865 4.82617 14.25C4.82617 19.635 9.18097 24 14.5534 24C16.9627 24 19.1775 23.115 20.8835 21.645L21.2876 22.065V23.25L28.7701 30.735L30.9998 28.5L23.5323 21ZM14.5534 21C10.8271 21 7.81916 17.985 7.81916 14.25C7.81916 10.515 10.8271 7.5 14.5534 7.5C18.2796 7.5 21.2876 10.515 21.2876 14.25C21.2876 17.985 18.2796 21 14.5534 21Z"
-            fill="currentColor"></path>
-        </g>
-        <defs>
-          <clipPath id="clip0_1302_7">
-            <rect
-              width="35.9158"
-              height="36"
-              fill="currentColor"
-              transform="translate(0.336914)"></rect>
-          </clipPath>
-        </defs>
-      </svg>
-
       <LanguageSwitcher />
       <ThemeIcon />
     </div>
   </div>
 </header>
-<style>
+<style lang="scss">
   header {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: var(--header-height);
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    width: 100%;
+    height: var(--header-height);
   }
+
   nav {
     width: 100%;
   }
 
-  .system-settings {
+  .tags {
+    @include bpMobile {
+      display: none;
+    }
   }
+
 </style>
