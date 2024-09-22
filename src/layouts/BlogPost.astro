@@ -5,14 +5,14 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import i18n from "i18next";
-type Props = CollectionEntry<"posts">["data"];
+type Props = CollectionEntry<"posts">["data"]
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
 <html lang={i18n.language}>
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description}  />
     <style>
       main {
         margin: 0 auto;
@@ -56,7 +56,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   </head>
 
   <body class="bg-white dark:bg-dark">
-    <Header />
+    <Header shouldShowBackButton />
     <main>
       <article>
         <div class="hero-image">

@@ -11,8 +11,6 @@
 @import url("./color-mode.css");
 
 :root {
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
   --black: 15, 18, 25;
   --gray-light: 229, 233, 240;
   --gray-dark: 34, 41, 57;
@@ -70,6 +68,26 @@ p {
   margin: 0.5em 0;
 }
 
+.prose details {
+  padding: 24px;
+  border-radius: 12px;
+  background: rgb(182 195 225);
+}
+
+.dark .prose details {
+  background-color: rgb(48 52 62);
+}
+
+.prose summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.prose details *:nth-child(2) {
+  margin-top: 24px;
+}
+
 .prose ol,
 .prose p {
   margin-bottom: 24px;
@@ -95,8 +113,8 @@ table {
 }
 
 table :is(td, th) {
-  border: 1px solid black;
-  padding: 0.3em;
+  border: 1px solid #00000033;
+  padding: 0.9em;
 }
 
 th {
@@ -105,10 +123,10 @@ th {
 }
 
 tr:nth-child(even) td {
-  /* background-color: #b2396b45; */
+  background-color: #8ed8fc21;
 }
 tr:nth-child(odd) td {
-  /* background-color: #b2396b45; */
+  background-color: #8ed8fc21;
 }
 
 textarea {
@@ -127,7 +145,7 @@ img {
   border-radius: 8px;
 }
 code {
-  padding: 3px 8px;
+  padding: 3px 6px;
   color: #79b8ff;
   background-color: #24292e;
   border-radius: 6px;
@@ -155,7 +173,7 @@ pre > code {
   all: unset !important;
 }
 blockquote {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid theme(colors.accent);
   padding: 0 0 0 20px;
   margin: 0px;
   font-size: 1.333em;

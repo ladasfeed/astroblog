@@ -1,0 +1,7 @@
+:root {
+    --header-height: 70px;
+
+    @include bpMobile {
+        --header-height: 48px;
+    }
+}

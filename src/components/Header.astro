@@ -2,15 +2,21 @@
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
 import ThemeIcon from "./ThemeIcon.astro";
-import { TestComponent } from "./react/Test";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import SearchIcon from "@assets/icons/search.svg?raw";
+import BackButton from "@assets/icons/back.svg?raw";
 import { getRouter } from "src/routes";
 import i18n from "i18next";
 
 const TAGS = ["frontend", "traveling", "css"];
 
 const router = getRouter(i18n.language);
+
+interface Props {
+  shouldShowBackButton?: boolean;
+}
+
+const {shouldShowBackButton} = Astro.props
+
 ---
 
 <header
@@ -27,6 +33,7 @@ const router = getRouter(i18n.language);
     <div class="system-settings flex gap-[16px] items-center">
       <LanguageSwitcher />
       <ThemeIcon />
+      {shouldShowBackButton && <span  class="back-button"><Fragment set:html={BackButton} /></span>}
     </div>
   </div>
 </header>
@@ -41,6 +48,12 @@ const router = getRouter(i18n.language);
     align-items: center;
     width: 100%;
     height: var(--header-height);
+    transition: transform .3s;
+    transition-timing-function: ease-in-out;
+
+    @include bpMobile {
+      padding: 12px;
+    }
   }
 
   nav {
@@ -53,4 +66,56 @@ const router = getRouter(i18n.language);
     }
   }
 
+  .back-button :global(svg) {
+    width: 28px;
+    height: 28px;
+    color: black;
+   
+    @include bpMobile {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  
+  :global(.dark) .back-button :global(svg) {
+    color: white;
+  }
+
 </style>
+
+<script is:inline >
+  document.addEventListener("astro:after-swap", () => {
+    const backButton = document.querySelector('.back-button');
+      if (backButton) {
+        backButton.addEventListener('click', () => { 
+          window.history.back();
+        })
+      } 
+
+
+      // 
+      const headerNode = document.querySelector('header');
+      let hasInitScrollHappened = false;
+
+      setTimeout(() => {
+        hasInitScrollHappened = true;
+      }, 500)
+
+      let lastScrollTop = null;
+      document.addEventListener('scroll', () => {
+        if (!hasInitScrollHappened) {
+          lastScrollTop = window.scrollY;
+          return;
+        };
+
+        if (window.scrollY > lastScrollTop) {
+          headerNode.style.transform = 'translateY(-100%)';
+        } else {
+          headerNode.style.transform = '';
+        }
+
+        lastScrollTop = window.scrollY;
+      })
+  });
+</script>
+

@@ -1,20 +1,21 @@
 .box {
   width: 50px;
-  border-radius: 50%;
   height: 50px;
+  border: 4px solid red;
+  border-radius: 50%;
   background: #6ca9b4;
   transform: rotate3d(0, 1, 1, 45deg);
-  border: 4px solid red;
 }
 
 .shadow {
   position: absolute;
+  top: 150px;
   width: 30px;
   height: 10px;
-  background: rgba(0, 0, 0, 0.56);
+  box-shadow: 0 0 5px 5px rgb(0 0 0 / 56%);
   border-radius: 50%;
-  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.56);
-  top: 150px;
+  background: rgb(0 0 0 / 56%);
+
   /*   transform: rotateY(40deg); */
 }
 
@@ -22,6 +23,12 @@
   position: absolute;
   width: 100%;
   height: 300px;
-  transform: translateY(30px) translateZ(-90px) rotateX(70deg);
   background-color: aqua;
+  transform: translateY(30px) translateZ(-90px) rotateX(70deg);
+}
+
+@include bpMobile {
+  .box, .shadow {
+    transition: .3s;
+  }
 }

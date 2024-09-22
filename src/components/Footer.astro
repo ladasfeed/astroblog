@@ -27,9 +27,13 @@ const today = new Date();
 		gap: 24px;
 		margin-top: 48px;
 		padding: 40px 24px;
-		border-top: 4px solid theme('colors.dark_darker');
+		border-top: 4px solid theme('colors.blue-dark');
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+
+	:global(.dark) footer {
+		border-top: 4px solid theme('colors.dark_darker');
 	}
 
 	.social-links {

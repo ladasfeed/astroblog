@@ -223,6 +223,10 @@ export const prerender = true;
     flex-wrap: wrap;
     gap: 24px;
     margin-top: 24px;
+
+    @include bpMobile {
+      gap: 12px;
+    }
   }
 
   .categories__list-item {
@@ -236,8 +240,10 @@ export const prerender = true;
     font-weight: bold;
     font-size: 24px;
     letter-spacing: 2px;
+    cursor: pointer;
 
     @include bpMobile {
+      padding: 8px;
       font-size: 16px;
     }
   }
