@@ -51,7 +51,7 @@
 .image {
   display: block;
   flex-shrink: 0;
-  width: 120px;
+  width: 140px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -104,11 +104,11 @@
 @mixin mobileLayout {
   .title {
     margin-bottom: 12px;
-    font-size: 18px;
+    font-size: 24px;
   }
 
   .description {
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .image {

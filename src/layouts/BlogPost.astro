@@ -5,6 +5,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import i18n from "i18next";
+import { HeadingsNavigation } from "@components/lib/HeadingsNav/HeadingsNav";
 type Props = CollectionEntry<"posts">["data"]
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
@@ -52,10 +53,29 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
       .last-updated-on {
         font-style: italic;
       }
+
+      .nav {
+        position: fixed;
+        top: 100px;
+        left: calc(100% - 320px);
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        max-width: 300px;
+        box-shadow:  0 0 5px 2px rgb(0 0 0 / 50%);
+        border-radius: 12px;
+      }
+
+      @media screen and (width <= 1640px) {
+        .nav {
+          display: none;
+        } 
+      }
     </style>
   </head>
 
   <body class="bg-white dark:bg-dark">
+    <HeadingsNavigation className="nav" containerSelector={`.prose`} client:only />
     <Header shouldShowBackButton />
     <main>
       <article>

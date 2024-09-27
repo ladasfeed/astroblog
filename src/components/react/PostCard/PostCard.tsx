@@ -32,7 +32,7 @@ export const PostCard: React.FC<PropsType> = ({ view, ...postData }) => {
 
         <div
           className={styles.image}
-          style={{ backgroundImage: `url(${postData.data.heroImage}` }}
+          style={{ backgroundImage: `url("${postData.data.heroImage}")` }}
         ></div>
       </div>
     </a>

@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+}
+
+.navigation-item__child {
+  position: relative;
+  left: 20px;
+}
+
+._active {
+  color: theme(colors.accent);
+  transition: color 0.3s;
+}
+
+:global(html) {
+  scroll-padding-top: 40%;
+}

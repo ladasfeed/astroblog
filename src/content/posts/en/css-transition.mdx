@@ -2,7 +2,7 @@
 title: "Css transform in depth"
 description: "Learn some important features of css transition."
 pubDate: "Jul 08 2022"
-heroImage: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+heroImage: "https://firebasestorage.googleapis.com/v0/b/blog-a260a/o/css-transform%2FGroup%208%20(1).webp?alt=media"
 tags: ["css", "frontend"]
 category: "Frontend"
 ---
@@ -35,8 +35,9 @@ In the article i always try to avoid typical matematician explanation since i fi
 When you apply a transform property to an element the browser creates 3 dimensional space with 3 axes.
 See the following picture to understand the model and default axises directions.
 
-( Z AXIS LOOKS AT YOU, Y AXIS LOOKS DOWN )
-An image with transform translate 0 and axis;
+
+![alt text](https://storage.googleapis.com/blog-a260a/css-transform/Screenshot_20240927_161624.png)
+ 
 
 There are some transform functions available:
 
@@ -51,7 +52,7 @@ In other words, CSS transform functions based on transform matrix R4. Every func
 
 I know that this concept may be a little bit tricky, but the next example is supposed to clarify everything.
 
-The task: rotate the element by `45deg` with the pivot point at the center and move it along X axis by `25px`;
+> The task: rotate the element by `45deg` with the pivot point at the center and move it along X axis by `25px`;
 
 <Example4 client:only />
 
@@ -122,10 +123,10 @@ This is a very powerful feature that allows you to move your model to fell 3d sp
 
 ### Transform style
 
-| Value       | Description                                       |
-| ----------- | ------------------------------------------------- |
-| flat        | default value;                                    |
-| preserve-3d | creates 3 dimensional axes for direct child nodes |
+| Value              | Description                                       |
+| -----------        | ------------------------------------------------- |
+| <b>flat</b>        | default value;                                    |
+| <b>preserve-3d</b> | creates 3 dimensional axes for direct child nodes |
 
 ### Perspective origin
 
@@ -133,7 +134,7 @@ The property defines point of view on our container with perspective property de
 
 ## Transform functions
 
-I am not gonna make a review of all transform function since the Interned is full of such information. Let's pay some attention to bad-known functions.
+I am not gonna make a review of all transform function since the Internet is full of such information. Let's pay some attention to bad-known functions.
 
 ### Skew
 
@@ -161,7 +162,7 @@ I think you have never heard, never used and will never use the function since i
 
 This is something called 4x4 transformation matrix ( or homogeneous matrix ). But there is one cool thing about it - you are able to apply many transform functions in a really short way.
 [Here](https://code-industry.ru/masterpdfeditor-help/transformation-matrix/) you can find a really cool explanation of what is homogeneous matrix
-But i suggest you just to play with some inputs on [this amazing website](https://ramlmn.github.io/visualizing-matrix3d/) with live demo.
+but i suggest you just to play with some inputs on [this amazing website](https://ramlmn.github.io/visualizing-matrix3d/) with live demo.
 
 ### Rotate3d
 

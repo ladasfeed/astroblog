@@ -109,3 +109,9 @@
   background: #131313;
   border: 5px solid #bababa;
 }
+
+@media screen and (max-width: 768px) {
+  .check-input-group {
+    flex-direction: column;
+  }
+}
