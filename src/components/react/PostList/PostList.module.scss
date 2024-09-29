@@ -1,0 +1,30 @@
+.filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.checkbox {
+    &__input {
+        visibility: hidden;
+    }
+
+    &__label {
+        display: block;
+        padding: 6px 12px;
+        border: 2px solid theme('colors.dark');
+        border-radius: 24px;
+        background: white;
+        font-weight: 500;
+        font-size: 24px;
+        transition: .3s;
+        cursor: pointer;
+    }
+
+    &__input:checked + &__label {
+        border: 2px solid white;
+        background: theme('colors.accent');
+        color: white;
+
+    }
+}

@@ -16,7 +16,6 @@ export async function getStaticPaths() {
         const slug = post.slug.replace(`${i18n.language}/`, "");
         return { params: { slug: slug || undefined }, props: post };
     });
-    console.log(i18n.language, "SHOULD BE RU");
     return paths;
 }
 type Props = CollectionEntry<"posts">;

@@ -1,11 +1,21 @@
 ---
-import { changeLanguage } from "i18next";
+import i18n, { changeLanguage } from "i18next";
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { PostList } from "@components/react/PostList/PostList";
+import { getEntry } from "astro:content";
 
 changeLanguage("ru");
 
+const allPosts = (await getCollection("posts", (entry) => {
+    return entry.slug.startsWith(i18n.language);
+}));
+console.log(allPosts.length, "CURT!1");
+const tags = (await getEntry("tags", "tags"));
 export const prerender = true;
 ---
 
-<BaseLayout />
+<BaseLayout >
+    <PostList tags={tags} posts={allPosts} />
+</BaseLayout>

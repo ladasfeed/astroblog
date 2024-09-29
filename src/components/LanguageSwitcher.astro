@@ -100,7 +100,6 @@ const icon = LANGUAGE_TO_ICON_MAP[i18next.language];
             ? currentUrlWithoutLang
             : `${langToSwitch}${currentUrlWithoutLang}`;
 
-        console.log(urlToRedirect, "urlToRedirect");
 
         document.location.pathname = urlToRedirect;
       })
@@ -110,7 +109,6 @@ const icon = LANGUAGE_TO_ICON_MAP[i18next.language];
   init();
 
   document.addEventListener("astro:after-swap", () => {
-    console.log("???");
     init();
   });
 </script>

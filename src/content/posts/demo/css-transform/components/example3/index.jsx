@@ -10,7 +10,6 @@ export default () => {
     transformOriginOptions[1]
   );
 
-  console.log(step);
 
   const nextStepHandler = () => {
     setStep((prev) => (prev + 1) % 2);

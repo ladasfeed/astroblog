@@ -19,7 +19,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
 export const GET = async () => {
   const list = (await db.collection("test").get()).docs;
-  console.log(list[0].data(), "list");
 
   return new Response(JSON.stringify(list[0].data()), {
     status: 200,

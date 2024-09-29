@@ -128,8 +128,6 @@ function initObserver(
           `#navigation-${arrayOfHeadings[i].id}`
         );
 
-        console.log(currentActive, "currentActive");
-
         currentActive?.classList.add(activeClassName);
       }
     }
