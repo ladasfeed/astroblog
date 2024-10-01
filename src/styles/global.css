@@ -186,7 +186,7 @@ pre > code {
   all: unset !important;
 }
 blockquote {
-  border-left: 4px solid theme(colors.accent);
+  border-left: 4px solid theme(colors.accent.DEFAULT);
   padding: 0 0 0 20px;
   margin: 0px;
   font-size: 1.333em;
@@ -246,6 +246,7 @@ body {
 
 main {
   padding-bottom: 60px;
+  min-height: calc(100vh - var(--header-height));
 }
 
 /* Github comments */

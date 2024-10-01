@@ -24,7 +24,11 @@ export default {
       transparent: "transparent",
       current: "currentColor",
       white: "#E5FCFF",
-      accent: "#B8336A",
+      accent: {
+        DEFAULT: "#B8336A",
+        light: "#c16e90",
+        dark: "#B8336A",
+      },
       black: "#000000",
       dark: "#272727",
       dark_darker: "#1a1a1a",

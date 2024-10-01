@@ -1,15 +1,20 @@
 import type { CollectionEntry, ContentCollectionKey } from "astro:content";
 import styles from "./PostList.module.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { PostCard } from "../PostCard/PostCard";
+import cn from "classnames";
+import { TagCheckbox } from "../Tag";
 
 type PropsType = {
   posts: CollectionEntry<"posts">[];
   tags: CollectionEntry<"tags">;
+  defaultValue: string;
 };
 
-export const PostList = ({ posts, tags }: PropsType) => {
-  const [chosenTags, setChosenTags] = React.useState(new Set());
+export const PostList = ({ posts, tags, defaultValue }: PropsType) => {
+  const [chosenTags, setChosenTags] = React.useState(
+    new Set(defaultValue ? [defaultValue] : undefined)
+  );
 
   const filteredList = React.useMemo(() => {
     if (chosenTags.size == 0) return posts;
@@ -23,10 +28,6 @@ export const PostList = ({ posts, tags }: PropsType) => {
     });
   }, [chosenTags]);
 
-  useEffect(() => {
-    console.log(tags);
-  }, []);
-
   const onChangeTag = (e) => {
     setChosenTags((value) => {
       const tagToToggle = e.target.value;
@@ -36,33 +37,39 @@ export const PostList = ({ posts, tags }: PropsType) => {
         value.add(tagToToggle);
       }
 
-      return value;
+      return new Set(value);
+    });
+  };
+
+  const resetHandler = () => {
+    setChosenTags((prev) => {
+      prev.clear();
+      return new Set(prev);
     });
   };
 
   return (
-    <div className={styles.container}>
+    <>
       <div className={styles.filters}>
-        {tags.data.map((tag) => (
-          <label className={styles.checkbox}>
-            <input
-              className={styles.checkbox__input}
+        <div className={cn(styles.filters__list, "section-container")}>
+          {tags.data.map((tag) => (
+            <TagCheckbox
               name="tags"
               onChange={onChangeTag}
-              type="checkbox"
               value={tag}
               checked={chosenTags.has(tag)}
-            ></input>
-            <span className={styles.checkbox__label}>{tag}</span>
-          </label>
-        ))}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className={styles.list}>
-        {filteredList.map((item) => {
-          return <PostCard {...item} />;
-        })}
+      <div className={cn(styles.container, "section-container")}>
+        <div className={styles.list}>
+          {filteredList.map((item) => {
+            return <PostCard {...item} />;
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

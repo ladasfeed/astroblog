@@ -25,3 +25,10 @@
 }
 
 
+/* Theme */
+
+@mixin dark {
+  :global(.dark) {
+    @content
+  }
+}

@@ -1,0 +1,42 @@
+
+.container {
+    position: relative;
+
+    .input {
+        display: none;
+    }
+
+    .label {
+        display: block;
+        padding: 6px 12px;
+        box-shadow: 0 1px 2px 1px rgb(0 0 0 / 50%);
+        border-radius: 24px;
+        background: white;
+        font-weight: 500;
+        font-size: 24px;
+        transition: .3s;
+        cursor: pointer;
+
+        @include bpMobile {
+            font-size: 16px;
+        }
+    }
+
+    &:active .label {
+        background: theme('colors.accent.light');
+        color: white;
+    }
+
+    .input:checked + .label {
+        background: theme('colors.accent.DEFAULT');
+        color: white;
+    }
+}
+
+@include dark {
+    .label {
+        box-shadow: 0 1px 2px 1px rgb(255 255 255 / 50%);
+        background: theme('colors.dark_darker');
+        color: white;
+    }
+}

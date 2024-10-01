@@ -5,26 +5,20 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { PostList } from "@components/react/PostList/PostList";
 import { getEntry } from "astro:content";
+import { normalizePosts } from "@lib/postsHelpers";
 
 changeLanguage("en");
 
-const allPosts = (await getCollection("posts", (entry) => {
+const allPosts = normalizePosts(await getCollection("posts", (entry) => {
     return entry.slug.startsWith(i18n.language);
 }));
-console.log(allPosts.length, "CURT!1");
 const tags = (await getEntry("tags", "tags"));
-export const prerender = true;
+export const prerender = false;
+const chosenTag = Astro.url.searchParams.get('tag') || '';
 ---
 
-<BaseLayout >
-    <main class="section-container page">
-        <PostList tags={tags} posts={allPosts} />
+<BaseLayout pageTitle="base64">
+    <main class="page">
+        <PostList client:load defaultValue={chosenTag} tags={tags} posts={allPosts} />
     </main>
 </BaseLayout>
-
-
-<style lang="scss">
-    .page {
-        padding-top: 54px;
-    }
-</style>
