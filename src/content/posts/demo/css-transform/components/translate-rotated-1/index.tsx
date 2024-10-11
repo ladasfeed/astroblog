@@ -27,7 +27,9 @@ export default () => {
       <div className="container-inner">
         <Box pos={{ x: 50, y: 0 }} style={{ transform: boxTransform }} />
       </div>
-      <code>transform: {boxTransform}</code>
+      <pre>
+        <code>transform: {boxTransform}</code>
+      </pre>
       <button onClick={toggleTranslate} className="action">
         Translate!
       </button>

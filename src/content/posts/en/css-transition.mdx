@@ -19,21 +19,20 @@ import SkewExample from '../demo/css-transform/components/skew-example/index.tsx
 
 import '../demo/css-transform/components/styles.css';
 
-At first glance CSS transform property is pretty easy since it works in a very declarative
-way. If you tell the browser to rotate an element around Z axis by `45deg`, or scale an element `2` times, or move it along Y axis by `100px` - it will do it easily!
+At first glance, the CSS transform property seems straightforward, as it operates in a declarative manner.
+If you instruct the browser to rotate an element around Z-axis by `45deg`, scale an element by `2`, or move it along the Y-axis by `100px`, it executes these transformations effortlessly!
 
 <Example1 client:only />
 
-Anyway, the more you work with complex CSS animations the more you understand that there are actually some interesting things about CSS transform logic under the hood.
-
-In the article i always try to avoid typical matematician explanation since i find them unnecessary difficult.
+However, the more you work with complex CSS animations, the more you realize that there's some intriguing logic behind CSS transforms.
+In the article, i aim to avoid typical mathematical explanations as I find them unnecessarily complicated.
 
 ---
 
 ## How transform functions work
 
-When you apply a transform property to an element the browser creates 3 dimensional space with 3 axes.
-See the following picture to understand the model and default axises directions.
+When you apply a transform property to an element, the browser creates 3D space with three axes.
+Refer to the following image to understand the model and the default directions of axes.
 
 
 ![alt text](https://storage.googleapis.com/blog-a260a/css-transform/Screenshot_20240927_161624.png)
@@ -46,23 +45,23 @@ There are some transform functions available:
 3. `skew`, `skewX`, `skewY` - distort the element by specific axis
 4. `scale`, `scaleX`, `scaleY` - scale by specific axis
 
-> Every transform function is applied to transform-axes, _not the element_. Axes are placed relatevely the element accordingly to `transform-origin` value.
+> Every transform function is applied to transform-axes, _not the element_ itself. The axes are positioned relative to the element according to the `transform-origin` value.
 
-In other words, CSS transform functions based on transform matrix R4. Every function represents a specific matrix that will be multipled by another function-matrix in order, from left to right. But i want you to use my explanation since it is more clear than matrices IMHO.
+In other words, CSS transform functions are based on a 4x4 transformation matrix. Each function represents a specific matrix that is multipled by others in sequence, from left to right. However I prefer not to use that information at all.
 
-I know that this concept may be a little bit tricky, but the next example is supposed to clarify everything.
+I understand this concept might seem a bit tricky, but the following example should clarify everything.
 
-> The task: rotate the element by `45deg` with the pivot point at the center and move it along X axis by `25px`;
+> The task: rotate the element by `45deg` with the pivot point at the center and move it along X-Axis by `25px`;
 
 <Example4 client:only />
 
-As you can see the element is not moving by actual X axis - the translate path is rotated with the element!
+As you can see the element is not moving along actual X-Axis - the translation path rotates with the element!
 
 ---
 
 Another example.
 
-> The task: move the cube by `25px` and scale it `2` times.
+> The task: move the cube by `25px` and scale it by `2`.
 
 ```css
 .box {
@@ -73,9 +72,9 @@ Another example.
 
 <Example2 mode="translate-scale" client:only />
 
-But what if we change the order of transfrom functions?
-Stop and think a little about it.
-Look at the code below - everthing should work as an example above - scale the cube 2 times and translate it by `25px`.
+But what if we change the order of the transfrom functions?
+Stop and think about it for a moment.
+Check the code below - everything should work as in the previous example: scale the cube by 2 and translate it by `25px`.
 
 ```css
 .box {
@@ -86,21 +85,22 @@ Look at the code below - everthing should work as an example above - scale the c
 
 <Example2 mode="scale-translate" client:only />
 
-Astonishing result: the cube is moved by `50px`! Why is that?
-Because we do not scale the object, we scale axes!
-Before scaling axes pixel was exactly like viewport pixel, but after scaling it became 2 times bigger.
+
+A surprising result: the cube moves by 50px! Why does this happen?
+Because we are not scaling the object itself - we are scaling the axes!
+Before scaling, a pixel on the axis matched a viewport pixel, but after scaling, axes-pixel became twice as large."
 
 ---
 
-Again: we do not work with the element, we work with it's transform-axes.
+Again: we are not working with the element, we are working with it's transform-axes.
 
 ## Transform related properties
 
 ### Transform origin
 
-We are able to define where our axes are gonna be placed relatevely to an element using `transform-origin` value.
+We can define where our axes will be positioned relative to an element using `transform-origin` value.
 
-To see how it affects the result of tranforms lets use rotateZ function with different transform-origin value;
+To see how it affects the result of tranforms, let's use the `rotateZ` function with different `transform-origin` value:
 
 <Example3 client:only />
 
@@ -108,7 +108,7 @@ To see how it affects the result of tranforms lets use rotateZ function with dif
 
 ### Perspective
 
-This is a very powerful feature that allows you to move your model to fell 3d space. That property defines how far the user is located from your model.
+This is a powerful feature that allows you to position your model to fell like it exists in 3D space. That property defines how far the user is from your model.
 
 ```css
 .container {
@@ -138,16 +138,16 @@ I am not gonna make a review of all transform function since the Internet is ful
 
 ### Skew
 
-This is quite hard to understand this function without knowlendge from above, but we are ready.
-If you do skewY(45deg), it rotates x axis by 45deg. Simple as that! Points coordinates were not changed, we just changed the base axes.
+It is quite challenging to understand this function without the knowlendge we've covered, but now we are ready.
+If you apply `skewY(45deg)`, it effectively rotates X-Axis by `45deg`. Simple as that! Points coordinates were not changed, we just changed the base axes.
 
-See the example to understand what is happening to axes when we apply skew function.
+Refer to the example to see how the axes change when we apply the `skew` function.
 
 <SkewExample client:only />
 
 ### Matrix3d
 
-I think you have never heard, never used and will never use the function since it is constructed for mathematitian goys.
+I think you have never heard, never used and will never use the function since it is constructed for mathematitian guys.
 
 ```css
 .box {
@@ -160,14 +160,14 @@ I think you have never heard, never used and will never use the function since i
 }
 ```
 
-This is something called 4x4 transformation matrix ( or homogeneous matrix ). But there is one cool thing about it - you are able to apply many transform functions in a really short way.
-[Here](https://code-industry.ru/masterpdfeditor-help/transformation-matrix/) you can find a really cool explanation of what is homogeneous matrix
-but i suggest you just to play with some inputs on [this amazing website](https://ramlmn.github.io/visualizing-matrix3d/) with live demo.
+This is something called 4x4 transformation matrix ( or homogeneous matrix ). But there is a one cool thing about it - you can apply many transform functions in a short way.
+<a target='_blank' href="https://code-industry.ru/masterpdfeditor-help/transformation-matrix/">Here</a> you can find a really cool explanation of what is homogeneous matrix
+but i suggest you just to play with some inputs on <a target='_blank' href="https://ramlmn.github.io/visualizing-matrix3d/">this amazing website</a> with live demo.
 
 ### Rotate3d
 
 I know, this is not a property, but this is a functuion that requires special attention.
-It allows you to define a vector around which the element will rotate. The vector starts from the transfrom-origin.
+It allows you to define a vector around which the element will rotate. The vector starts from the `transfrom-origin`.
 
 ```css
 .box {
@@ -202,7 +202,7 @@ container.addEventListener('mousemove', (e: MouseEvent) => {
 });
 ```
 
-If your really liked the demo you can read the explanation. But be aware, explanation is 2 times harnder than the whole article :)
+If your really liked the demo you can read the explanation. But be aware, explanation is 2 times more complicated than the whole article :)
 
 <details>
 <summary>Explanation</summary>
@@ -300,10 +300,10 @@ As you remember, if we try to do something like that:
 }
 ```
 
-then our element is gonna be translated by rotated x axis. That does not fit the purpose.
+then our element will be moved by rotated X-Axis. That does not meet the intended purpose.
 
-We have to use some simple trigonometry. It is incredebly useful to know how to use trigonometry circle, because css and js provides you several helpful functions like `sin` and `cos`.
-So, lets rotate the element. Its axes are rotated as well, but we have to translate the element around previous axes. Fortunately, we know how our axes were changed - they were just rotaed by 60 degrees! What does that mean?
+We have to use some simple trigonometry. It is incredebly useful to know how to use trigonometry circle since the CSS and JS provides several helpful functions like `sin` and `cos`.
+Let's rotate the element. It's axes are rotated as well, but we have to translate the element around previous axes. Fortunately, we know how our axes were changed - they were just rotaed by 60 degrees! What does that mean?
 
 > It means that every point in the current coordinate system was rotated as well. Here is the formula.
 
@@ -328,7 +328,7 @@ See the result!
 
 ### Implicit positioned ancestor
 
-If you apply any transfrom function to an element, the element becomes a positioned ancestor, so any nested element with position absolute is gonna be positioned relatevely our transformed element!
+If you apply any transfrom function to an element, it becomes a positioned ancestor, so any nested element with `position: absolute` will be positioned relative to the transformed element!
 
 ### Svg transform
 
@@ -348,10 +348,10 @@ If you face any flickering issues with animated elements in Safari browser just 
 }
 ```
 
-[Reference](https://stackoverflow.com/questions/15751012/css-transform-causes-flicker-in-safari-but-only-when-the-browser-is-2000px-w)
+<a href="https://stackoverflow.com/questions/15751012/css-transform-causes-flicker-in-safari-but-only-when-the-browser-is-2000px-w" target='_blank'>Reference</a>
 
 ## Conclusion
 
-I hope that you learned something useful from the article. If not - you are already very powerful developer! Unfortunately, a very small percentage of developers know HOW something actually works.
+I hope that you learned something useful from the article. If not - you are already very powerful developer! Unfortunately, a very small percentage of developers know how something actually works.
 
-God bless you
+Good luck!

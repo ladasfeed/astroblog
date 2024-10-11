@@ -23,7 +23,7 @@ export default {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      white: "#E5FCFF",
+      white: "rgb(237 237 237)",
       accent: {
         DEFAULT: "#B8336A",
         light: "#c16e90",
